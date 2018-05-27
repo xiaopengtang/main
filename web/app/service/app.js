@@ -16,7 +16,7 @@ module.exports = class AppService extends Service {
         }
         const url = this.ctx.req.url
         return (Array.isArray(list) && list || [list]).filter(info => {
-            const r = new RegExp(info.rule)
+            const r = new RegExp(info.rules)
             return r.test(url)
         }).sort((next, pre) => next.level - pre.level).pop()
     }
