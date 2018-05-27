@@ -1,5 +1,5 @@
 'use strict';
-
+const path = require('path')
 module.exports = appInfo => {
   const config = exports = {};
 
@@ -27,6 +27,11 @@ module.exports = appInfo => {
     app: true,
     // 是否加载到 agent 上，默认关闭
     agent: false,
+  }
+
+  exports.static = {
+    maxAge: 31536000,
+    dir: path.join(appInfo.baseDir,'../static'),
   }
 
   return config;
