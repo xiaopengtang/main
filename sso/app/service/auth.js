@@ -15,7 +15,7 @@ module.exports = class Auth extends Service {
     createToken(info){
         const {key, field} = this.app.config.token || {}
         const str = field.map(name => info[name] || '').join(',')
-        return md5(`${key}@${str}`)
+        return md5(`${key}@${str}_`+(new Date).getTime())
     }
     // 
     async login(where){

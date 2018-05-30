@@ -12,7 +12,7 @@ module.exports = appInfo => {
   config.token = {
     key: 'ssocenter_1316000828x',
     field: ['id', 'email', 'name'],
-    expire: 24 * 60 * 1000,
+    expire: 24 * 60 * 60 * 1000,
     prefix: '!!@#$%^&@#$$%%^^&&**)(_+'
   }
 
@@ -21,7 +21,7 @@ module.exports = appInfo => {
       path.join(appInfo.baseDir, 'app/view'),
       // path.join(appInfo.baseDir, 'path/to/another'),
     ].join(','),
-    cache: true,
+    cache: false,
     defaultExtension: '.html',
     defaultViewEngine: 'nunjucks'
   };
@@ -33,6 +33,12 @@ module.exports = appInfo => {
       db: 0,
     },
   }
+  exports.session = {
+    key: 'SSO_SESS',
+    maxAge: 24 * 3600 * 1000, // 1 天
+    httpOnly: true,
+    encrypt: true,
+  };
   config.mysql = {
     // 单数据库信息配置
     client: {

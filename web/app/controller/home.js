@@ -16,6 +16,22 @@ class HomeController extends Controller {
     ctx.set(result.headers);
     ctx.body = result.data;
   }
+
+  async auth(){
+    let user = this.ctx.session.user
+    const {token, referer} = this.ctx.query || {}
+    if(user || !token){
+      return this.ctx.redirect(referer || '/')
+    }
+    user = await this.ctx.service.token.queryUserInfo(token)
+    this.ctx.body = {user, token}
+    if(!user){
+      return this.ctx.redirect('/sso/login')
+    }
+    this.ctx.session.user = user
+    this.ctx.session.token = token
+    return this.ctx.redirect(referer || '/')
+  }
 }
 
 module.exports = HomeController;

@@ -29,6 +29,13 @@ module.exports = appInfo => {
     agent: false,
   }
 
+  exports.session = {
+    key: 'MAIN_SESS',
+    maxAge: 24 * 3600 * 1000, // 1 天
+    httpOnly: true,
+    encrypt: true,
+  };
+
   exports.static = {
     maxAge: 31536000,
     dir: path.join(appInfo.baseDir,'../static'),
