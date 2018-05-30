@@ -51,7 +51,8 @@ class UserController extends Controller {
   }
   async loginout(){
     
-    const {token} = this.ctx.query || {}
+    let {token} = this.ctx.query || {}
+    token = token || this.ctx.session.token
     if(!token){
       return this.json({success: false, data: null})
     }
