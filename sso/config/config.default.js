@@ -9,6 +9,13 @@ module.exports = appInfo => {
   // add your config here
   config.middleware = [];
 
+  config.token = {
+    key: 'ssocenter_1316000828x',
+    field: ['id', 'email', 'name'],
+    expire: 24 * 60 * 1000,
+    prefix: '!!@#$%^&@#$$%%^^&&**)(_+'
+  }
+
   config.view = {
     root: [
       path.join(appInfo.baseDir, 'app/view'),
@@ -25,6 +32,25 @@ module.exports = appInfo => {
       password: '',
       db: 0,
     },
+  }
+  config.mysql = {
+    // 单数据库信息配置
+    client: {
+      // host
+      host: '106.15.201.3',
+      // 端口号
+      port: '3306',
+      // 用户名
+      user: 'root',
+      // 密码
+      password: 'KdWDMQRTpxZxvoWb',
+      // 数据库名
+      database: 'sso',
+    },
+    // 是否加载到 app 上，默认开启
+    app: true,
+    // 是否加载到 agent 上，默认关闭
+    agent: false,
   }
 
   return config;
