@@ -1,0 +1,15 @@
+{
+  "apps": [{
+    "name": "wiki",
+    "script": "production.js",
+    "cwd": "/dev-center/main/wiki",
+    "exec_mode": "fork",
+    "max_memory_restart": "1G",
+    "autorestart": true,
+    "node_args": [],
+    "args": [],
+    "env": {
+      
+    }
+  }]
+}
