@@ -1,11 +1,17 @@
 'use strict';
 const path = require('path')
 module.exports = appInfo => {
-  const config = exports = {};
+  const config = exports = {
+    security: {
+      csrf: {
+        enable: false,
+      }
+    }
+  };
 
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1527055906355_2705';
-
+ 
   // add your config here
   config.middleware = [];
 

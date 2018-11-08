@@ -36,7 +36,7 @@ module.exports = class AppService extends Service {
             protocol: host.protocol || 'http:',
             pathname: this.ctx.req.url,
         }))
-        // console.log({url})
+        console.log({url})
         const result = await new Promise(resolve => this.ctx.curl(url, {
             method: this.ctx.req.method,
             headers: this.ctx.req.headers,

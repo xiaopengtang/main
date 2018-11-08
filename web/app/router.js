@@ -6,5 +6,5 @@
 module.exports = app => {
   const { router, controller } = app;
   router.get('/auth/sso', controller.home.auth)
-  router.get('*', controller.home.index);
+  router.resources('*', controller.home.index);
 };

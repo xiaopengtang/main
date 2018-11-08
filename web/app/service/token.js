@@ -23,7 +23,7 @@ module.exports = class TokenService extends Service {
             protocol: host.protocol || 'http:',
             pathname: host.pathname//this.ctx.req.url,
         }))
-        console.log({url})
+        // console.log({url})
         const result = await new Promise(resolve => this.ctx.curl(url, {
             method: 'get',//this.ctx.req.method,
             data: {token}
