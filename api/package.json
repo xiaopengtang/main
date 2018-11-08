@@ -1,14 +1,12 @@
 {
-  "name": "sso",
+  "name": "api",
   "version": "1.0.0",
   "description": "",
   "private": true,
   "dependencies": {
     "egg": "^2.2.1",
     "egg-mysql": "^3.0.0",
-    "egg-redis": "^2.0.0",
-    "egg-scripts": "^2.5.0",
-    "egg-view-nunjucks": "^2.2.0"
+    "egg-scripts": "^2.5.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -24,9 +22,9 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-sso --port 7004",
-    "stop": "egg-scripts stop --title=egg-server-sso",
-    "dev": "egg-bin dev --port 7004",
+    "start": "egg-scripts start --daemon --title=egg-server-api",
+    "stop": "egg-scripts stop --title=egg-server-api",
+    "dev": "egg-bin dev --port=8004",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

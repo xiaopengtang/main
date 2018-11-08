@@ -4,7 +4,8 @@
 'use strict'
 
 const Service = require('egg').Service
-
+const fs = require('fs');
+const FormStream = require('formstream')
 const Url = require('url')
 
 module.exports = class AppService extends Service {
@@ -37,11 +38,48 @@ module.exports = class AppService extends Service {
             pathname: this.ctx.req.url,
         }))
         console.log({url})
-        const result = await new Promise(resolve => this.ctx.curl(url, {
+        let options = {
             method: this.ctx.req.method,
-            headers: this.ctx.req.headers,
-            data: this.ctx.req.method === 'post' ? this.ctx.req.body : null
-        }).then(resolve).catch(e => {
+            headers: this.ctx.req.headers
+        }
+        const fileStream = fs.createReadStream(__filename)
+        if(/post/i.test(options.method)){
+            const form = new FormStream()
+            let filename = ''
+            const reader = () => new Promise(async(resolve) => {
+                const readerStream = await this.ctx.getFileStream()
+                filename = readerStream.filename
+                // let data = ''
+                let arr = []
+                // readerStream.setEncoding('UTF8')
+                readerStream.on('data', chunk => {
+                    arr.push(Buffer.from(chunk, 'binary'))
+                });
+                readerStream.on('end', () => {
+                    let len = 0
+                    arr.forEach(it => len += it.length)
+                    resolve(Buffer.concat(arr, len))
+                })
+                readerStream.on('error', e => resolve(null))
+            })
+            const buffer = await reader()
+            form.buffer('file', buffer, filename)
+            // options.dataType = 'json'
+            options.headers = form.headers()
+            // delete options.headers //form.headers()
+            // console.log(['stream.fields', stream]);
+            options.stream = form //fs.createReadStream(this.ctx.req.body)
+        }
+        const result = await new Promise(resolve => this.ctx.curl(url, options
+            // {
+            // method: this.ctx.req.method,
+            // headers: this.ctx.req.headers,
+            // stream: this.ctx.req.method === 'post' ? this.ctx.req.body : null,
+            // contentType: 'json',
+            // // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
+            // dataType: 'json',
+        // }
+        ).then(resolve).catch(e => {
             this.app.logger.info(e)
             resolve()
         })) 
