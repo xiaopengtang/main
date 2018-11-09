@@ -32,17 +32,19 @@ module.exports = class AppService extends Service {
         if(!host){
             return 
         }
-        const url = decodeURIComponent(Url.format({
+        let url = Url.format({
             host: [host.host, host.port].join(':'),
             protocol: host.protocol || 'http:',
-            pathname: this.ctx.req.url,
-        }))
-        console.log({url})
+            pathname: this.ctx.path,
+        })
+        if(this.ctx.querystring){
+            url += `?${encodeURIComponent(this.ctx.querystring)}`
+        }
+        
         let options = {
             method: this.ctx.req.method,
             headers: this.ctx.req.headers
         }
-        const fileStream = fs.createReadStream(__filename)
         if(/post/i.test(options.method)){
             const form = new FormStream()
             let filename = ''
@@ -70,6 +72,7 @@ module.exports = class AppService extends Service {
             // console.log(['stream.fields', stream]);
             options.stream = form //fs.createReadStream(this.ctx.req.body)
         }
+        // console.log({url, options})
         const result = await new Promise(resolve => this.ctx.curl(url, options
             // {
             // method: this.ctx.req.method,
